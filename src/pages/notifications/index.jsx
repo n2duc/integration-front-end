@@ -7,6 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+
 import useGetDataNotice from "@/hook/useGetDataNotice";
 
 const NotificationsPage = () => {
@@ -19,6 +26,22 @@ const NotificationsPage = () => {
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <h2 className="text-2xl font-semibold">Notifications</h2>
         <div className="grid grid-cols-3 gap-4">
+          <Tabs defaultValue="birthday" className="col-span-3" orientation="vertical">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="birthday">Birthday</TabsTrigger>
+              <TabsTrigger value="anniversary">Hiring Anniversary</TabsTrigger>
+              <TabsTrigger value="vacation">Excess Vacation</TabsTrigger>
+            </TabsList>
+            <TabsContent value="birthday">
+              <h1>birthday</h1>
+            </TabsContent>
+            <TabsContent value="anniversary">
+              <h1>anniversary</h1>
+            </TabsContent>
+            <TabsContent value="vacation">
+              <h1>vacation</h1>
+            </TabsContent>
+          </Tabs>
           {/* Birthday */}
           <Card>
             <CardHeader>
@@ -64,10 +87,10 @@ const NotificationsPage = () => {
               <CardDescription className="!mt-0">You have {vacation.length} messages.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-3 text-sm">
-              {vacation.map((item) => {
+              {vacation.map((item, index) => {
                 const fullName = `${item.lastName} ${item.firstName}`;
                 return (
-                  <div key={item.PERSONAL_ID} className="bg-red-50 px-5 py-2 rounded">
+                  <div key={`${item.PERSONAL_ID}${index}`} className="bg-red-50 px-5 py-2 rounded">
                     <p className="font-semibold">{fullName}</p>
                     <p>Vacation Days: {item.vacationDays}</p>
                     <p>Total Vacation Days: {item.totalVacationDays}</p>

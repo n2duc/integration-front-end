@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import EmployeesTable from "./employees-table";
 import { useEffect, useState } from "react";
 import EmployeeTableActions from "./employee-table-action";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const EmployeesPage = () => {
   // State for the selected gender
@@ -32,7 +33,7 @@ const EmployeesPage = () => {
   })
 
   return (
-    <>
+    <ScrollArea className="h-full">
       <div className="flex-1 space-y-4  p-4 md:p-8 pt-6">
         <div className="flex items-end justify-between mb-5">
           <Heading
@@ -47,7 +48,7 @@ const EmployeesPage = () => {
         <Separator />
         <EmployeesTable employees={filteredDatas} />
       </div>
-    </>
+    </ScrollArea>
   );
 };
 

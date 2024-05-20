@@ -2,7 +2,7 @@ import { employeeSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast } from "@/components/ui/use-toast"
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
 import {
@@ -23,18 +23,23 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import useGetDataSelect from '@/hook/useGetDataSelect';
+import getPersonalData from '@/hook/getPersonalData';
 
 const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
   const { toast } = useToast();
   const [employeeData, setEmployeeData] = useState({});
 
   const { listPayrates, listBenefitPlans } = useGetDataSelect();
+  // Memoize the list of pay rates and benefit plans to prevent unnecessary re-renders
+  const memoizedListPayrates = useMemo(() => listPayrates, [listPayrates]);
+  const memoizedListBenefitPlans = useMemo(() => listBenefitPlans, [listBenefitPlans]);
 
   useEffect(() => {
     try {
       const fetchEmployee = async () => {
-        const response = await axios.get(`http://localhost:8080/api/employees/${employeeId}`);
-        setEmployeeData(response.data);
+        // const response = await axios.get(`http://localhost:8080/api/employees/${employeeId}`);
+        const personalData = await getPersonalData(employeeId);
+        setEmployeeData(personalData);
       }
       fetchEmployee();
     } catch (error) {
@@ -44,11 +49,16 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
 
   const form = useForm({
     resolver: zodResolver(employeeSchema),
-    defaultValues: employeeData,
+    // defaultValues: employeeData,
+    defaultValues: useMemo(() => employeeData, [employeeData]),
     values: employeeData,
   });
 
-  console.log(employeeData);
+  // useEffect(() => {
+  //   if (employeeData) {
+  //     form.reset(employeeData);
+  //   }
+  // }, [employeeData, form]);
 
   const onUpdate = async (values) => {
     console.log("onUpdate: ", values);
@@ -66,6 +76,12 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
         variant: "destructive",
       });
     }
+  }
+
+  console.log("employeeData: ", employeeData);
+
+  if (!employeeData) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -294,14 +310,14 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
               name="benefitPlanId"
               render={({ field }) => (
                 <FormItem>
-                  <Select onValueChange={field.onChange} value={field.value ? field.value.toString() : ''} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value} >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select benefits plan" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {listBenefitPlans.map((benefitPlan) => (
+                      {memoizedListBenefitPlans.map((benefitPlan) => (
                         <SelectItem key={benefitPlan.BENEFIT_PLANS_ID} value={benefitPlan.BENEFIT_PLANS_ID.toString()}>
                           {benefitPlan.PLAN_NAME}
                         </SelectItem>
@@ -324,7 +340,7 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {listPayrates.map((payrate) => (
+                      {memoizedListPayrates.map((payrate) => (
                         <SelectItem key={payrate.idPayRates} value={payrate.idPayRates.toString()}>
                           {payrate.Value}
                         </SelectItem>

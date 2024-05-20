@@ -51,7 +51,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
       (entry) => entry.department !== "" || entry.jobTitle !== "" || entry.startDate !== "" || entry.endDate !== "" || entry.location !== ""
     );
     const newData = {...values, jobHistory: filteredJobHistory};
-    console.log({...values, jobHistory: filteredJobHistory});
+    console.log("Data: ", newData);
     try {
       await axios.post("http://localhost:8080/api/employees", newData);
       form.reset();
