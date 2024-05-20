@@ -11,7 +11,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import PaginationSection from "@/components/shared/pagination-section";
+import { useState } from "react";
+import usePagination from "@/hook/usePagination";
+
 const EmployeesTable = ({ employees }) => {
+  const { currentPosts, setCurrentPage, postsPerPage, currentPage } = usePagination(employees);
+
   return (
     <>
       {employees && (
@@ -30,7 +45,7 @@ const EmployeesTable = ({ employees }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {employees.map((employee) => {
+              {currentPosts.map((employee) => {
                 const fullName = `${employee.CURRENT_LAST_NAME} ${employee.CURRENT_MIDDLE_NAME} ${employee.CURRENT_FIRST_NAME} `;
                 const employmentStatus = employee.EMPLOYMENT_STATUS.replace("-", " ").toLowerCase().replace(/\b\w/g, function(l){ return l.toUpperCase() });
                 return (
@@ -50,6 +65,14 @@ const EmployeesTable = ({ employees }) => {
               })}
             </TableBody>
           </Table>
+          {employees.length > postsPerPage && (
+            <PaginationSection 
+              totalPosts={employees.length}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </>
       )}
     </>

@@ -1,6 +1,15 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { Bell } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 import DigitalClock from "./digital-clock";
+import MobileSidebar from "./mobile-sidebar";
 
 const Header = () => {
   return (
@@ -19,12 +28,35 @@ const Header = () => {
         </Link>
       </div>
       <div className={cn("block lg:!hidden")}>
-        {/* <MobileSidebar /> */}
+        <MobileSidebar />
       </div>
 
       <div className="flex items-center gap-5">
         <DigitalClock />
-        <div className="w-8 h-8 rounded-full bg-gray-500"></div>
+        {/* <Link
+          to='/notifications'
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 w-9"
+        >
+          <Bell className="w-5 h-5" />
+        </Link> */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to='/notifications'
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              >
+                <Bell className="w-5 h-5" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Notifications</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <div className="w-8 h-8 rounded-full bg-gray-500 overflow-hidden">
+          <img src="/meow.jpg" alt="avatar" className="w-full h-full object-cover" />
+        </div>
       </div>
     </nav>
   </div>

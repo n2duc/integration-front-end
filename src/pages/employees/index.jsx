@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import EmployeeTableActions from "./employee-table-action";
 
 const EmployeesPage = () => {
+  // State for the selected gender
+  const [selectedGender, setSelectedGender] = useState('all');
+  // State for the selected status
+  const [selectedStatus, setSelectedStatus] = useState('all');
+
   const [employees, setEmployees] = useState([]);
   useEffect(() => {
     // Fetch employees data from API
@@ -16,6 +21,16 @@ const EmployeesPage = () => {
     fetchEmployees();
   }, []);
 
+  const handleFilterGender = (value) => setSelectedGender(value);
+  const handleFilterStatus = (value) => setSelectedStatus(value);
+
+  const filteredDatas = employees.filter((employee) => {
+    return (
+      (selectedGender === 'all' || employee.CURRENT_GENDER.toLowerCase() === selectedGender) &&
+      (selectedStatus === 'all' || employee.EMPLOYMENT_STATUS.trimEnd().toLowerCase() === selectedStatus)
+    )
+  })
+
   return (
     <>
       <div className="flex-1 space-y-4  p-4 md:p-8 pt-6">
@@ -24,10 +39,13 @@ const EmployeesPage = () => {
             title={`Employees (${employees.length})`}
             description="Manage employees (Client side table functionalities.)"
           />
-          <EmployeeTableActions />
+          <EmployeeTableActions
+            filterGender={handleFilterGender}
+            filterStatus={handleFilterStatus}
+          />
         </div>
         <Separator />
-        <EmployeesTable employees={employees} />
+        <EmployeesTable employees={filteredDatas} />
       </div>
     </>
   );

@@ -17,8 +17,8 @@ export default function PopupModal({ renderModal }) {
         isOpen={isOpen}
         onClose={onClose}
         className={'!bg-background !px-1 min-w-[1120px]'}
-        // title="Create New Employee"
-        // description="Please fill in the details below."
+        title="Create New Employee"
+        description="Please fill in the details below."
       >
         <ScrollArea className="h-[80dvh] px-6">
           {renderModal(onClose)}

@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+const jobHistorySchema = z.object({
+  // id: z.string(),
+  department: z.string(),
+  jobTitle: z.string(),
+  startDate: z.string(),
+  endDate: z.string(),
+  location: z.string(),
+})
+
 export const employeeSchema = z.object({
   firstname: z.string().min(1, { message: 'firstname is required' }),
   lastname: z.string().min(1, { message: 'lastname is required' }),
@@ -31,4 +40,5 @@ export const employeeSchema = z.object({
   vacationDays: z.coerce.number().int().min(1, { message: 'vacationDays is required' }),
   hireDate: z.string().min(1, { message: 'hireDate is required' }),
   terminationDate: z.string().min(1, { message: 'hireDate is required' }),
+  jobHistory: z.array(jobHistorySchema),
 });

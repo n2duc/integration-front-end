@@ -48,6 +48,8 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
     values: employeeData,
   });
 
+  console.log(employeeData);
+
   const onUpdate = async (values) => {
     console.log("onUpdate: ", values);
     try {
@@ -67,7 +69,7 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
   }
 
   return (
-    <div className="px-1">
+    <div className="px-1 py-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onUpdate)} className="space-y-4">
         <div className="grid grid-cols-2 gap-x-8 gap-y-4">
@@ -292,7 +294,7 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
               name="benefitPlanId"
               render={({ field }) => (
                 <FormItem>
-                  <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value ? field.value.toString() : ''} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select benefits plan" />

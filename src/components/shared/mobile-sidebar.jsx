@@ -1,20 +1,25 @@
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Link } from "react-router-dom";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import DashboardNav from "./dashboard-nav";
 import { navItems } from "@/constants/data";
+import { MenuIcon } from "lucide-react";
+import { useState } from "react";
 
-export default function MobileSidebar({ setSidebarOpen, sidebarOpen }) {
+export default function MobileSidebar() {
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="bg-background !px-0">
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <MenuIcon />
+        </SheetTrigger>
+        <SheetContent side="left" className="!px-0">
           <div className="space-y-4 py-4">
-            <div className="space-y-4 px-3 py-2">
-              <Link to="/" className="py-2 text-2xl font-bold text-white ">
-                Logo
-              </Link>
-              <div className="space-y-1 px-2">
-                <DashboardNav items={navItems} setOpen={setSidebarOpen} />
+            <div className="px-3 py-2">
+              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                Overview
+              </h2>
+              <div className="space-y-1">
+                <DashboardNav items={navItems} setOpen={setOpen} />
               </div>
             </div>
           </div>

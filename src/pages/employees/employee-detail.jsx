@@ -41,7 +41,7 @@ const EmployeeDetail = ({ isOpen, onClose, employeeId }) => {
       >
         <ScrollArea className="h-[75dvh] px-6">
           <h2 className="font-medium text-gray-800 mb-1">Personal Infomation</h2>
-          <div className="bg-green-50 grid grid-cols-2 gap-x-6 gap-y-2 px-3 py-2 rounded text-sm">
+          <div className="bg-green-50 grid grid-cols-2 gap-x-6 gap-y-2 p-3 rounded text-sm">
             <TextField label="First name" value={employee?.firstname} />
             <TextField label="Last name" value={employee?.lastname} />
             <TextField label="Gender" value={employee?.gender} />
@@ -59,7 +59,7 @@ const EmployeeDetail = ({ isOpen, onClose, employeeId }) => {
             <TextField label="Marital Status" value={employee?.maritalStatus} />
           </div>
           <h2 className="font-medium text-gray-800 mt-4 mb-1">Employment</h2>
-          <div className="bg-gray-50 grid grid-cols-2 gap-x-6 gap-y-2 px-3 py-2 rounded text-sm">
+          <div className="bg-gray-50 grid grid-cols-2 gap-x-6 gap-y-2 p-3 rounded text-sm">
             <TextField label="Payrate Name" value={payrates?.payRateName} />
             <TextField label="Value" value={payrates?.Value} />
             <TextField label="Tax Percentage" value={payrates?.taxPercentage} />

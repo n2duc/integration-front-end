@@ -21,8 +21,6 @@ import EmployeeUpdateForm from "./employee-update-form";
 export const CellAction = ({ employeeId }) => {
   const { toast } = useToast();
 
-  
-
   const [loading] = useState(false);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

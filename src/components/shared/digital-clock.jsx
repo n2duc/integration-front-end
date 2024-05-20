@@ -24,7 +24,7 @@ const DigitalClock = () => {
   }, []);
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-5 mr-5">
       <p className="">{date}</p>
       <p className="font-medium bg-gray-50 text-gray-700 px-3 py-2 rounded-md w-[120px] text-center">{time}</p>
     </div>

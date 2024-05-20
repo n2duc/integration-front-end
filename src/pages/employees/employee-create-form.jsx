@@ -1,3 +1,4 @@
+import { Plus, X } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -15,17 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Heading } from '@/components/ui/heading';
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { ToastAction } from "@/components/ui/toast"
@@ -37,18 +30,30 @@ import useGetDataSelect from '@/hook/useGetDataSelect';
 
 const EmployeeCreateForm = ({ modalClose }) => {
   const { toast } = useToast();
-  
+  // const [updateUI, setUpdateUI] = useState(false);
+
   const { listPayrates, listBenefitPlans } = useGetDataSelect();
 
   const form = useForm({
     resolver: zodResolver(employeeSchema),
-    defaultValues: {},
+    defaultValues: {
+      jobHistory: [{ department: "", jobTitle: "", startDate: "", endDate: "", location: "" }],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "jobHistory",
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
+    const filteredJobHistory = values.jobHistory.filter(
+      (entry) => entry.department !== "" || entry.jobTitle !== "" || entry.startDate !== "" || entry.endDate !== "" || entry.location !== ""
+    );
+    const newData = {...values, jobHistory: filteredJobHistory};
+    console.log({...values, jobHistory: filteredJobHistory});
     try {
-      await axios.post("http://localhost:8080/api/employees", values);
+      await axios.post("http://localhost:8080/api/employees", newData);
       form.reset();
       modalClose();
       toast({
@@ -66,13 +71,8 @@ const EmployeeCreateForm = ({ modalClose }) => {
 
   return (
     <div className="px-1">
-      <Heading 
-        title="Create New Employee"
-        description="Please fill in the details below."
-        className="space-y-2 py-4 text-center"
-      />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-1">
           <div className="grid grid-cols-2 gap-x-8 gap-y-4">
             <FormField 
               control={form.control}
@@ -386,6 +386,100 @@ const EmployeeCreateForm = ({ modalClose }) => {
                 </FormItem>
               )}
             />
+          </div>
+          <div className="bg-gray-50 rounded-sm">
+            {fields.map((field, index) => (
+              <div className="flex items-end gap-2 px-3 py-2" key={field.id}>
+                {/* <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.id`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>ID</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="ID" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.department`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Department</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Department" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.jobTitle`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Name</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Job Title" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField 
+                  control={form.control}
+                  name={`jobHistory.${index}.startDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Start date</FormLabel>}
+                      <FormControl>
+                        <Input type="date" placeholder="Pick your birthday" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField 
+                  control={form.control}
+                  name={`jobHistory.${index}.endDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>End date</FormLabel>}
+                      <FormControl>
+                        <Input type="date" placeholder="Pick your birthday" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.location`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Location</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Location" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {fields.length > 1 && index !== fields.length - 1 && (
+                  <Button variant="destructive" size="icon" type="button" onClick={() => remove(index)}>
+                    <X size={16} />
+                  </Button>
+                )}
+                {index === fields.length - 1 && (
+                  <Button variant="outline" size="icon" type="button" onClick={() => append({ deparment: "", jobTitle: "", startDate: "", endDate: "", location: "" })}>
+                    <Plus size={16} />
+                  </Button>
+                )}
+              </div>
+            ))}
           </div>
           <div className="flex items-center justify-center gap-4">
             <Button
