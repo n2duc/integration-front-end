@@ -56,7 +56,7 @@ const DashboardPage = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Total Revenue
+                Total Incomes
               </CardTitle>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -132,9 +132,9 @@ const DashboardPage = () => {
           </Card>
           <Card className="col-span-4 md:col-span-3">
             <CardHeader>
-              <CardTitle>Top revenue</CardTitle>
+              <CardTitle>Top incomes</CardTitle>
               <CardDescription>
-                Top 5 people with the highest revenue.
+                Top 5 people with the highest incomes.
               </CardDescription>
             </CardHeader>
             <CardContent>

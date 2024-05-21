@@ -34,10 +34,10 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
   const memoizedListPayrates = useMemo(() => listPayrates, [listPayrates]);
   const memoizedListBenefitPlans = useMemo(() => listBenefitPlans, [listBenefitPlans]);
 
+  // Fetch employee data from API
   useEffect(() => {
     try {
       const fetchEmployee = async () => {
-        // const response = await axios.get(`http://localhost:8080/api/employees/${employeeId}`);
         const personalData = await getPersonalData(employeeId);
         setEmployeeData(personalData);
       }
@@ -49,39 +49,27 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
 
   const form = useForm({
     resolver: zodResolver(employeeSchema),
-    // defaultValues: employeeData,
-    defaultValues: useMemo(() => employeeData, [employeeData]),
+    defaultValues: employeeData,
     values: employeeData,
   });
 
-  // useEffect(() => {
-  //   if (employeeData) {
-  //     form.reset(employeeData);
-  //   }
-  // }, [employeeData, form]);
-
+  // Update employee data
   const onUpdate = async (values) => {
     console.log("onUpdate: ", values);
-    try {
-      await axios.put(`http://localhost:8080/api/employees/${employeeId}`, values);
-      modalClose();
-      toast({
-        title: "Update Employee",
-        description: "Employee updated successfully",
-      });
-    } catch (error) {
-      toast({
-        title: "Update Employee Failed",
-        description: `${error.message}`,
-        variant: "destructive",
-      });
-    }
-  }
-
-  console.log("employeeData: ", employeeData);
-
-  if (!employeeData) {
-    return <div>Loading...</div>;
+    // try {
+    //   await axios.put(`http://localhost:8080/api/employees/${employeeId}`, values);
+    //   modalClose();
+    //   toast({
+    //     title: "Update Employee",
+    //     description: "Employee updated successfully",
+    //   });
+    // } catch (error) {
+    //   toast({
+    //     title: "Update Employee Failed",
+    //     description: `${error.response.data.error}`,
+    //     variant: "destructive",
+    //   });
+    // }
   }
 
   return (

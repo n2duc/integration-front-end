@@ -21,7 +21,11 @@ export const employeeSchema = z.object({
   phoneNumber: z.string().min(10, {
     message: "Phone number must be at least 10 characters.",
   }),
-  birthDay: z.string().min(1, { message: 'birthDay is required' }),
+  birthDay: z.string().refine((date) => {
+    return new Date(date) < new Date();
+  }, {
+    message: "Start date can be not in the future.",
+  }).refine(date => date != null, { message: 'birthDay is required' }),
   ssNumber: z.coerce.number().int().min(1, { message: 'ssNumber is required' }),
   driverLicense: z.string().min(1, { message: 'driverLicense is required' }),
   address1: z.string().min(1, { message: 'address1 is required' }),

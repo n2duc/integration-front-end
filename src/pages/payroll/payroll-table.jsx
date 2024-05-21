@@ -39,12 +39,13 @@ const PayrollTable = ({ data }) => {
               {currentPosts.map((item) => {
                 const fullName = `${item.lastName} ${item.firstName}`;
                 const employmentStatus = item.info.EMPLOYMENT_STATUS.replace("-", " ").toLowerCase().replace(/\b\w/g, function(l){ return l.toUpperCase() });
+                const shareholderStatus = item.info.SHAREHOLDER_STATUS ? "Shareholder" : "Non-shareholder";
                 return (
                   <TableRow key={item.idEmployee}>
                     <TableCell className="font-medium">{item.idEmployee}</TableCell>
                     <TableCell>{fullName}</TableCell>
                     <TableCell>{item.info.CURRENT_GENDER}</TableCell>
-                    <TableCell><Badge variant={item.info.SHAREHOLDER_STATUS ? "secondary" : "destructive"}>{item.info.SHAREHOLDER_STATUS ? "Yes" : "No"}</Badge></TableCell>
+                    <TableCell>{shareholderStatus}</TableCell>
                     <TableCell>{item.info.ETHNICITY}</TableCell>
                     <TableCell>{employmentStatus}</TableCell>
                     <TableCell>{item.info?.JOB_HISTORY?.DEPARTMENT}</TableCell>

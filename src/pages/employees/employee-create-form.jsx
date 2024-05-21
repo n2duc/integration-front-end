@@ -53,7 +53,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
     const newData = {...values, jobHistory: filteredJobHistory};
     console.log("Data: ", newData);
     try {
-      const response = await axios.post("http://localhost:8080/api/employees", newData);
+      await axios.post("http://localhost:8080/api/employees", newData);
       form.reset();
       modalClose();
       toast({
@@ -390,19 +390,6 @@ const EmployeeCreateForm = ({ modalClose }) => {
           <div className="bg-gray-50 rounded-sm">
             {fields.map((field, index) => (
               <div className="flex items-end gap-2 px-3 py-2" key={field.id}>
-                {/* <FormField
-                  control={form.control}
-                  name={`jobHistory.${index}.id`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>ID</FormLabel>}
-                      <FormControl>
-                        <Input placeholder="ID" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
                 <FormField
                   control={form.control}
                   name={`jobHistory.${index}.department`}

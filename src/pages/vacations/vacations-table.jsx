@@ -35,12 +35,13 @@ const VacationsTable = ({ vacations }) => {
                 const fullName = `${vacation.CURRENT_FIRST_NAME} ${vacation.CURRENT_MIDDLE_NAME} ${vacation.CURRENT_LAST_NAME}`;
                 const employmentStatus = vacation["EMPLOYMENT.EMPLOYMENT_STATUS"];
                 // const newStatus = employmentStatus.replace("-", " ").toLowerCase().replace(/\b\w/g, function(l){ return l.toUpperCase() })
+                const shareholderStatus = vacation.SHAREHOLDER_STATUS ? "Shareholder" : "Non-shareholder";
                 return (
                   <TableRow key={vacation.PERSONAL_ID}>
                     <TableCell className="font-medium">{vacation.PERSONAL_ID}</TableCell>
                     <TableCell>{fullName}</TableCell>
                     <TableCell>{vacation.CURRENT_GENDER}</TableCell>
-                    <TableCell><Badge variant={vacation.SHAREHOLDER_STATUS ? "secondary" : "destructive"}>{vacation.SHAREHOLDER_STATUS ? "Yes" : "No"}</Badge></TableCell>
+                    <TableCell>{shareholderStatus}</TableCell>
                     <TableCell>{vacation.ETHNICITY}</TableCell>
                     <TableCell>{employmentStatus}</TableCell>
                     <TableCell>{vacation.totalVacationDaysCurrentYear}</TableCell>
