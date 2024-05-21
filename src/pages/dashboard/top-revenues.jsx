@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
+// Get the initials of the employee's name
 const getInitials = (name) => {
   const initials = name.split(' ').map(word => word[0]).join('');
   return initials.length > 2 ? initials.slice(-2) : initials;

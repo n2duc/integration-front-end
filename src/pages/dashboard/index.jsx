@@ -16,6 +16,7 @@ const DashboardPage = () => {
   const { anniversary, vacation, birthDay } = useGetDataNotice();
 
   const [payrolls, setPayrolls] = useState([]);
+  // Fetch payrolls data from API
   useEffect(() => {
     try {
       const fetchPayrolls = async () => {
@@ -29,11 +30,13 @@ const DashboardPage = () => {
     }
   }, []);
 
+  // Sort payrolls data by totalIncome
   const sortedData = [...payrolls].sort((a, b) => b.totalIncome - a.totalIncome);
-
+  // Calculate totalIncome and averageIncome
   const totalIncome = payrolls.reduce((sum, person) => sum + person.totalIncome, 0);
   const averageIncome = totalIncome / payrolls.length;
 
+  // Convert totalIncome and averageIncome to USD format
   const USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -70,9 +73,6 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{USDollar.format(totalIncome)}</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
             </CardContent>
           </Card>
           <Card>
@@ -82,9 +82,6 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{USDollar.format(averageIncome)}</div>
-              <p className="text-xs text-muted-foreground">
-                +201 since last hour
-              </p>
             </CardContent>
           </Card>
           <Card>
@@ -109,9 +106,6 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{payrolls.length}</div>
-              <p className="text-xs text-muted-foreground">
-                +180.1% from last month
-              </p>
             </CardContent>
           </Card>
           <Card>
@@ -121,9 +115,6 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{totalNotifications}</div>
-              <p className="text-xs text-muted-foreground">
-                +19% from last month
-              </p>
             </CardContent>
           </Card>
         </div>

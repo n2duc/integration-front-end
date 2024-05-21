@@ -30,6 +30,7 @@ export default function Overview() {
     return acc;
   }, []);
 
+  // Create a new array to store the summarized data
   const dataStatus = chartData.reduce((acc, current) => {
     const gender = current.EMPLOYMENT_STATUS.toLowerCase();
     const index = acc.findIndex(item => item.name === gender);

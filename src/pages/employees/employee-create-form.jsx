@@ -53,7 +53,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
     const newData = {...values, jobHistory: filteredJobHistory};
     console.log("Data: ", newData);
     try {
-      await axios.post("http://localhost:8080/api/employees", newData);
+      const response = await axios.post("http://localhost:8080/api/employees", newData);
       form.reset();
       modalClose();
       toast({
@@ -63,7 +63,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
     } catch (error) {
       toast({
         title: "Create Employee Failed",
-        description: `${error.message}`,
+        description: `${error.response.status} ${error.response.statusText}: ${error.response.data.error}`,
         variant: "destructive",
       });
     }

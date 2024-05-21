@@ -15,7 +15,7 @@ const BenefitsTableActions = ({ filterGender, filterShareholder, data }) => {
       <div className="flex flex-1 gap-4">
         <Select onValueChange={filterGender}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Sort by gender" />
+            <SelectValue placeholder="Filter by gender" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
