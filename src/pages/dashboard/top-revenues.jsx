@@ -5,7 +5,7 @@ const getInitials = (name) => {
   return initials.length > 2 ? initials.slice(-2) : initials;
 };
 
-export default function RecentSales({ data }) {
+export default function TopRevenues({ data }) {
   const topFiveData = data.slice(0, 5);
   return (
     <div className="space-y-8">

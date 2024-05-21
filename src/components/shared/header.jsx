@@ -22,7 +22,7 @@ const Header = () => {
         >
           <img src="/logo.png" className="ml-4 h-8 w-8" alt="logo image" title="logo image" />
           <div className="flex flex-col items-start">
-            <span className="text-lg font-semibold leading-none">MineChen</span>
+            <span className="text-lg font-semibold leading-none">MineChain</span>
             <span className="text-sm">HR & Payroll Dashboard</span>
           </div>
         </Link>

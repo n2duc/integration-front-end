@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Overview from "./overview";
-import RecentSales from "./recent-sales";
+import TopRevenues from "./top-revenues";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 import useGetDataNotice from "@/hook/useGetDataNotice";
@@ -147,7 +147,7 @@ const DashboardPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <RecentSales data={sortedData} />
+              <TopRevenues data={sortedData} />
             </CardContent>
           </Card>
         </div>

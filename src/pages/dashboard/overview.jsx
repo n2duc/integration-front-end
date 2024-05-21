@@ -1,56 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, PieChart, Pie, Legend, Tooltip } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
 
-const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000
-  }
-];
+const COLORS_GENDER = ['#38bdf8', '#fca5a5'];
+const COLORS_STATUS = ['#fdba74', '#5eead4'];
 
 export default function Overview() {
   const [chartData, setChartData] = useState([]);
@@ -70,10 +22,10 @@ export default function Overview() {
     const index = acc.findIndex(item => item.name === gender);
     
     if (index !== -1) {
-        acc[index].value++;
-    } 
+      acc[index].value++;
+    }
     else {
-        acc.push({ name: current.CURRENT_GENDER, value: 1 });
+      acc.push({ name: current.CURRENT_GENDER, value: 1 });
     }
     return acc;
   }, []);
@@ -83,10 +35,10 @@ export default function Overview() {
     const index = acc.findIndex(item => item.name === gender);
     
     if (index !== -1) {
-        acc[index].value++;
+      acc[index].value++;
     } 
     else {
-        acc.push({ name: current.EMPLOYMENT_STATUS, value: 1 });
+      acc.push({ name: current.EMPLOYMENT_STATUS, value: 1 });
     }
     return acc;
   }, []);
@@ -103,7 +55,13 @@ export default function Overview() {
             outerRadius={100}
             fill="#818cf8"
             label
-          />
+          >
+            {
+              dataGender.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS_GENDER[index % COLORS_GENDER.length]} />
+              ))
+            }
+          </Pie>
           <Pie
             dataKey="value"
             data={dataStatus}
@@ -112,7 +70,14 @@ export default function Overview() {
             innerRadius={50}
             outerRadius={100}
             fill="#a3e635"
-          />
+            label
+          >
+            {
+              dataStatus.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS_STATUS[index % COLORS_STATUS.length]} />
+              ))
+            }
+          </Pie>
           <Tooltip />
         </PieChart>
     </ResponsiveContainer>

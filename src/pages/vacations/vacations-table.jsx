@@ -49,12 +49,14 @@ const VacationsTable = ({ vacations }) => {
               })}
             </TableBody>
           </Table>
-          <PaginationSection
-            totalPosts={vacations.length}
-            postsPerPage={postsPerPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          {vacations.length > postsPerPage && (
+            <PaginationSection
+              totalPosts={vacations.length}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </>
       )}
     </>

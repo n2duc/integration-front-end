@@ -47,12 +47,14 @@ const BenefitsTable = ({ benefits }) => {
               })}
             </TableBody>
           </Table>
-          <PaginationSection
-            totalPosts={benefits.length}
-            postsPerPage={postsPerPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+          {benefits.length > postsPerPage && (
+            <PaginationSection
+              totalPosts={benefits.length}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </>
       )}
     </>

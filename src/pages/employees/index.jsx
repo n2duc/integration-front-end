@@ -12,6 +12,9 @@ const EmployeesPage = () => {
   const [selectedStatus, setSelectedStatus] = useState('all');
 
   const [employees, setEmployees] = useState([]);
+
+  const [updateUI, setUpdateUI] = useState(false);
+
   useEffect(() => {
     // Fetch employees data from API
     const fetchEmployees = async () => {
@@ -20,7 +23,7 @@ const EmployeesPage = () => {
       setEmployees(data);
     };
     fetchEmployees();
-  }, []);
+  }, [updateUI]);
 
   const handleFilterGender = (value) => setSelectedGender(value);
   const handleFilterStatus = (value) => setSelectedStatus(value);
