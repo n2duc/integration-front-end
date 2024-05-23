@@ -2,11 +2,11 @@ import { z } from 'zod';
 
 const jobHistorySchema = z.object({
   // id: z.string(),
-  department: z.string(),
-  jobTitle: z.string(),
-  startDate: z.string(),
-  endDate: z.string(),
-  location: z.string(),
+  DEPARTMENT: z.string(),
+  JOB_TITLE: z.string(),
+  FROM_DATE: z.string(),
+  THRU_DATE: z.string(),
+  LOCATION: z.string(),
 })
 
 export const employeeSchema = z.object({

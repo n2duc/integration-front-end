@@ -48,7 +48,7 @@ const PayrollTable = ({ data }) => {
                     <TableCell>{shareholderStatus}</TableCell>
                     <TableCell>{item.info.ETHNICITY}</TableCell>
                     <TableCell>{employmentStatus}</TableCell>
-                    <TableCell>{item.info?.JOB_HISTORY?.DEPARTMENT}</TableCell>
+                    <TableCell>{item.info?.JOB_HISTORY}</TableCell>
                     <TableCell className="text-left w-[160px]">{`$${item.totalIncome}`}</TableCell>
                     {/* <TableCell className="text-right">
                       <CellAction />

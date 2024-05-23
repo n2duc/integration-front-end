@@ -27,7 +27,7 @@ const EmployeeDetail = ({ isOpen, onClose, employeeId }) => {
     }
   }, [employeeId]);
 
-  const { JOB_HISTORY, payrates } = employee;
+  const { jobHistory, payrates } = employee;
   const fullName = `${employee?.lastname} ${employee?.firstname}`;
 
   return (
@@ -81,7 +81,7 @@ const EmployeeDetail = ({ isOpen, onClose, employeeId }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {JOB_HISTORY?.map((job) => (
+              {jobHistory?.map((job) => (
                 <TableRow key={job.JOB_HISTORY_ID}>
                   <TableCell className="py-2">{job.JOB_TITLE}</TableCell>
                   <TableCell className="py-2">{job.DEPARTMENT}</TableCell>

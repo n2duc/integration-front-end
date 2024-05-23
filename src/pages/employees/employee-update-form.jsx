@@ -1,6 +1,6 @@
 import { employeeSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useToast } from "@/components/ui/use-toast"
 import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import useGetDataSelect from '@/hook/useGetDataSelect';
 import getPersonalData from '@/hook/getPersonalData';
+import { Plus, X } from 'lucide-react';
 
 const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
   const { toast } = useToast();
@@ -53,30 +54,39 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
     values: employeeData,
   });
 
+  const { fields } = useFieldArray({
+    control: form.control,
+    name: "jobHistory",
+  });
+
   // Update employee data
   const onUpdate = async (values) => {
-    console.log("onUpdate: ", values);
-    // try {
-    //   await axios.put(`http://localhost:8080/api/employees/${employeeId}`, values);
-    //   modalClose();
-    //   toast({
-    //     title: "Update Employee",
-    //     description: "Employee updated successfully",
-    //   });
-    // } catch (error) {
-    //   toast({
-    //     title: "Update Employee Failed",
-    //     description: `${error.response.data.error}`,
-    //     variant: "destructive",
-    //   });
-    // }
+    const filteredJobHistory = values.jobHistory.filter(
+      (entry) => entry.DEPARTMENT !== "" || entry.JOB_TITLE !== "" || entry.FROM_DATE !== "" || entry.THRU_DATE !== "" || entry.LOCATION !== ""
+    );
+    const newData = {...values, jobHistory: filteredJobHistory};
+    console.log("onUpdate: ", newData);
+    try {
+      await axios.put(`http://localhost:8080/api/employees/${employeeId}`, newData);
+      modalClose();
+      toast({
+        title: "Update Employee",
+        description: "Employee updated successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Update Employee Failed",
+        description: `${error.response.data.error}`,
+        variant: "destructive",
+      });
+    }
   }
 
   return (
     <div className="px-1 py-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onUpdate)} className="space-y-4">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
             <FormField 
               control={form.control}
               name="firstname"
@@ -389,6 +399,87 @@ const EmployeeUpdateForm = ({ modalClose, employeeId }) => {
                 </FormItem>
               )}
             />
+          </div>
+          <div className="bg-gray-50 rounded-sm">
+            {fields.map((field, index) => (
+              <div className="flex items-end gap-2 px-3 py-2" key={field.id}>
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.DEPARTMENT`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Department</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Department" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.JOB_TITLE`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Name</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Job Title" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField 
+                  control={form.control}
+                  name={`jobHistory.${index}.FROM_DATE`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Start date</FormLabel>}
+                      <FormControl>
+                        <Input type="date" placeholder="Pick your birthday" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField 
+                  control={form.control}
+                  name={`jobHistory.${index}.THRU_DATE`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>End date</FormLabel>}
+                      <FormControl>
+                        <Input type="date" placeholder="Pick your birthday" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`jobHistory.${index}.LOCATION`}
+                  render={({ field }) => (
+                    <FormItem>
+                      {index === 0 && <FormLabel>Location</FormLabel>}
+                      <FormControl>
+                        <Input placeholder="Location" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* {fields.length > 1 && index !== fields.length - 1 && (
+                  <Button variant="destructive" size="icon" type="button" onClick={() => remove(index)}>
+                    <X size={16} />
+                  </Button>
+                )}
+                {index === fields.length - 1 && (
+                  <Button variant="outline" size="icon" type="button" onClick={() => append({ DEPARTMENT: "", JOB_TITLE: "", FROM_DATE: "", THRU_DATE: "", LOCATION: "" })}>
+                    <Plus size={16} />
+                  </Button>
+                )} */}
+              </div>
+            ))}
           </div>
           <div className="flex items-center justify-center gap-4">
             <Button

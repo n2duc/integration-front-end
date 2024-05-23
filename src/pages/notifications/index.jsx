@@ -40,11 +40,11 @@ const NotificationsPage = () => {
                   <CardTitle className="text-lg italic flex items-center gap-2"><Cake size={18} />Birthday</CardTitle>
                   <CardDescription className="!mt-0">You have {birthDay.length} messages.</CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-3 text-sm">
+                <CardContent className="grid grid-cols-2 gap-3 text-sm">
                   {birthDay.map((item) => {
                     const fullName = `${item.CURRENT_LAST_NAME} ${item.CURRENT_MIDDLE_NAME} ${item.CURRENT_FIRST_NAME}`;
                     return (
-                      <div key={item.PERSONAL_ID} className="bg-green-50 px-5 py-2 rounded">
+                      <div key={item.PERSONAL_ID} className="bg-green-50 px-5 py-2 rounded shadow-sm">
                         <p className="font-semibold">{fullName}</p>
                         <p>Gender: {item.CURRENT_GENDER}</p>
                         <p>Birthday: {item.BIRTH_DATE}</p>
@@ -61,11 +61,11 @@ const NotificationsPage = () => {
                   <CardTitle className="text-lg italic flex items-center gap-2"><HeartHandshake size={18} />Hiring Anniversary</CardTitle>
                   <CardDescription className="!mt-0">You have {anniversary.length} messages.</CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-3 text-sm">
+                <CardContent className="grid grid-cols-2 gap-3 text-sm">
                   {anniversary.map((item) => {
                     const fullName = `${item.CURRENT_LAST_NAME} ${item.CURRENT_MIDDLE_NAME} ${item.CURRENT_FIRST_NAME}`;
                     return (
-                      <div key={item.PERSONAL_ID} className="bg-gray-50 px-5 py-2 rounded">
+                      <div key={item.PERSONAL_ID} className="bg-gray-50 px-5 py-2 rounded shadow-sm">
                         <p className="font-semibold">{fullName}</p>
                         <p>Gender: {item.CURRENT_GENDER}</p>
                         <p>Hire Date: {item["EMPLOYMENT.HIRE_DATE_FOR_WORKING"]}</p>
@@ -82,12 +82,12 @@ const NotificationsPage = () => {
                   <CardTitle className="text-lg italic flex items-center gap-2"><TriangleAlert color="#f97316" size={18} />Excess Vacation</CardTitle>
                   <CardDescription className="!mt-0">You have {vacation.length} messages.</CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-3 text-sm">
+                <CardContent className="grid grid-cols-2 gap-3 text-sm">
                   {vacation.map((item, index) => {
                     const fullName = `${item.lastName} ${item.firstName}`;
                     const remainDays = item.totalVacationDays - item.vacationDays;
                     return (
-                      <div key={`${item.PERSONAL_ID}${index}`} className="bg-amber-100 px-5 py-2 rounded">
+                      <div key={`${item.PERSONAL_ID}${index}`} className="bg-amber-100 px-5 py-2 rounded shadow-sm">
                         <p className="font-semibold">{fullName}</p>
                         <p>Vacation Days: {item.vacationDays}</p>
                         <p>Total Vacation Days: {item.totalVacationDays}</p>

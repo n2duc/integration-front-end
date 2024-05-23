@@ -37,7 +37,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
   const form = useForm({
     resolver: zodResolver(employeeSchema),
     defaultValues: {
-      jobHistory: [{ department: "", jobTitle: "", startDate: "", endDate: "", location: "" }],
+      jobHistory: [{ DEPARTMENT: "", JOB_TITLE: "", FROM_DATE: "", THRU_DATE: "", LOCATION: "" }],
     },
   });
 
@@ -48,7 +48,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
 
   const onSubmit = async (values) => {
     const filteredJobHistory = values.jobHistory.filter(
-      (entry) => entry.department !== "" || entry.jobTitle !== "" || entry.startDate !== "" || entry.endDate !== "" || entry.location !== ""
+      (entry) => entry.DEPARTMENT !== "" || entry.JOB_TITLE !== "" || entry.FROM_DATE !== "" || entry.THRU_DATE !== "" || entry.LOCATION !== ""
     );
     const newData = {...values, jobHistory: filteredJobHistory};
     console.log("Data: ", newData);
@@ -392,7 +392,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
               <div className="flex items-end gap-2 px-3 py-2" key={field.id}>
                 <FormField
                   control={form.control}
-                  name={`jobHistory.${index}.department`}
+                  name={`jobHistory.${index}.DEPARTMENT`}
                   render={({ field }) => (
                     <FormItem>
                       {index === 0 && <FormLabel>Department</FormLabel>}
@@ -405,7 +405,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
                 />
                 <FormField
                   control={form.control}
-                  name={`jobHistory.${index}.jobTitle`}
+                  name={`jobHistory.${index}.JOB_TITLE`}
                   render={({ field }) => (
                     <FormItem>
                       {index === 0 && <FormLabel>Name</FormLabel>}
@@ -418,7 +418,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
                 />
                 <FormField 
                   control={form.control}
-                  name={`jobHistory.${index}.startDate`}
+                  name={`jobHistory.${index}.FROM_DATE`}
                   render={({ field }) => (
                     <FormItem>
                       {index === 0 && <FormLabel>Start date</FormLabel>}
@@ -431,7 +431,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
                 />
                 <FormField 
                   control={form.control}
-                  name={`jobHistory.${index}.endDate`}
+                  name={`jobHistory.${index}.THRU_DATE`}
                   render={({ field }) => (
                     <FormItem>
                       {index === 0 && <FormLabel>End date</FormLabel>}
@@ -444,7 +444,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
                 />
                 <FormField
                   control={form.control}
-                  name={`jobHistory.${index}.location`}
+                  name={`jobHistory.${index}.LOCATION`}
                   render={({ field }) => (
                     <FormItem>
                       {index === 0 && <FormLabel>Location</FormLabel>}
@@ -461,7 +461,7 @@ const EmployeeCreateForm = ({ modalClose }) => {
                   </Button>
                 )}
                 {index === fields.length - 1 && (
-                  <Button variant="outline" size="icon" type="button" onClick={() => append({ deparment: "", jobTitle: "", startDate: "", endDate: "", location: "" })}>
+                  <Button variant="outline" size="icon" type="button" onClick={() => append({ DEPARTMENT: "", JOB_TITLE: "", FROM_DATE: "", THRU_DATE: "", LOCATION: "" })}>
                     <Plus size={16} />
                   </Button>
                 )}
